@@ -5,7 +5,8 @@ RUN mvn dependency:go-offline -B
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
-FROM eclipse-temurin:17-jre
+FROM docker.io/redhat/ubi9:latest
+RUN dnf install -y java-17-openjdk-headless && dnf clean all
 WORKDIR /app
 COPY --from=build /app/target/shipping.jar .
 EXPOSE 8004
