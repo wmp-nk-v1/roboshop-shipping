@@ -10,4 +10,7 @@ RUN dnf install -y java-17-openjdk-headless && dnf clean all
 WORKDIR /app
 COPY --from=build /app/target/shipping.jar .
 EXPOSE 8004
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["java", "-jar", "shipping.jar"]
