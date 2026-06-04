@@ -24,9 +24,9 @@ public class LatencyLoggingFilter implements Filter {
             chain.doFilter(req, res);
         } finally {
             double latencyMs = (System.currentTimeMillis() - start);
-            log.info("{{\"method\":\"{}\",\"path\":\"{}\",\"status\":{},\"latency_ms\":{}}}",
-                    request.getMethod(), request.getRequestURI(),
-                    response.getStatus(), latencyMs);
+            String json = String.format("{\"method\":\"%s\",\"path\":\"%s\",\"status\":%d,\"latency_ms\":%.1f}",
+                    request.getMethod(), request.getRequestURI(), response.getStatus(), latencyMs);
+            log.info(json);
         }
     }
 }
